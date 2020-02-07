@@ -1,13 +1,31 @@
 const {
 	zip,
 	entries,
+	map,
 	flat,
 	chain,
 	iterableFromNested,
-	map,
   filter,
-  reduce
+  reduce,
 } = require('../build/bundle.js');
+
+// describe('Testing lazy evaluation', () => {
+// 	test('map and filter', () => {
+// 		const arr = [1, 2, 3, 4, 5];
+
+// 		let now = Date.now();
+// 		const newArr1 = arr.map(n => n ** 2).filter(n => n < 10)
+// 		console.log(newArr1)
+// 		const time1 = Date.now() - now;
+		
+// 		now = Date.now();
+// 		const newArr2 = filter(map(arr, n => n ** 2), n => n < 10)
+// 		console.log([...newArr2])
+// 		const time2 = Date.now() - now;
+
+// 		console.log({ time1, time2 })
+// 	})
+// })
 
 describe('Combining Iterables', () => {
 	test('array double', () => {
@@ -20,7 +38,6 @@ describe('Combining Iterables', () => {
 
 	test('array with index', () => {
 		const arr = [1, 2, 3, 4, 5];
-		entries;
 
 		const res = [...entries(arr)];
 		const expected = arr.map((n, i) => [i, n]);
