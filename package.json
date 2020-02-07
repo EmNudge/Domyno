@@ -1,0 +1,22 @@
+{
+  "name": "lazy-iter",
+  "version": "1.0.0",
+  "description": "Basic lazy iterator class.",
+  "main": "index.js",
+  "scripts": {
+    "test": "rollup -c && jest",
+    "debug-test": "rollup -c && node --inspect-brk node_modules/.bin/jest --runInBand",
+    "build": "rollup -c"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^3.0.0",
+    "jest": "^24.9.0",
+    "rollup": "^1.29.0",
+    "rollup-plugin-terser": "^5.2.0",
+    "tslib": "^1.10.0",
+    "typescript": "^3.7.5"
+  }
+}

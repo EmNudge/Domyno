@@ -1,2 +1,3 @@
 # Domyno
-Itrerator  Utility Library
+
+Iterator utility library
