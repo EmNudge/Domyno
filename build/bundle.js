@@ -177,6 +177,16 @@ function pipeFilter(filterFunc) {
 function pipeFlatMap(mapFunc) {
     return (iter) => flatMap(iter, mapFunc);
 }
+function pipeSlice(begin, end) {
+    return (iter) => slice(iter, begin, end);
+}
+
+function pipeTake(until) {
+    return (iter) => take(iter, until);
+}
+function pipeTakeWhile(boolFunc) {
+    return (iter) => takeWhile(iter, boolFunc);
+}
 
 // generic pipe utility command
 const pipe = (...funcs) => (val) => funcs.reduce((accum, curr) => curr(accum), val);
@@ -203,7 +213,10 @@ exports.pipeFind = pipeFind;
 exports.pipeFlatMap = pipeFlatMap;
 exports.pipeMap = pipeMap;
 exports.pipeReduce = pipeReduce;
+exports.pipeSlice = pipeSlice;
 exports.pipeSome = pipeSome;
+exports.pipeTake = pipeTake;
+exports.pipeTakeWhile = pipeTakeWhile;
 exports.reduce = reduce;
 exports.slice = slice;
 exports.some = some;
