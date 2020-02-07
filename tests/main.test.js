@@ -9,8 +9,6 @@ const {
   reduce
 } = require('../build/bundle.js');
 
-const clone = (arr) => JSON.parse(JSON.stringify(arr));
-
 describe('Combining Iterables', () => {
 	test('array double', () => {
 		const arr = [1, 2, 3, 4, 5];

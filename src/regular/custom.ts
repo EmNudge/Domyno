@@ -1,4 +1,5 @@
-import { flat } from '../array-methods/misc'
+import { flat, entries } from './lazy'
+import { hofFunc } from '../main'
 
 /// basic utility function to combine 2 Iterables. It exits when one runs out of output,
 /// regardless of the state of the other one.
@@ -42,7 +43,6 @@ export function* iterableFromNested<T>(iterObj: NestedObject<T>, nestProp: strin
 }
 
 
-
 /// chains iterables, one after the other. The code is identical to flatten.
 export function* chain<T>(...iters: Iterable<any>[]): Iterable<T> {
 	yield* flat(iters);
@@ -56,5 +56,23 @@ export function* cycle<T>(iter: Iterable<T>): Iterable<T> {
 		for (const item of iter) {
 			yield item;
 		}
+	}
+}
+
+/// takes first n elements from an iter
+export function* take<T>(iter: Iterable<T>, until: number): Iterable<T> {
+	for (const [index, item] of entries(iter)) {
+		if (index === until) return;
+
+		yield item;
+	}
+}
+
+/// mimics Array.prototype.slice
+export function* takeWhile<T>(iter: Iterable<T>, boolFunc: hofFunc<T, boolean>): Iterable<T> {
+	for (const [index, item] of entries(iter)) {
+		if (!boolFunc(item, index)) return;
+
+		yield item;
 	}
 }

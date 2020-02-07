@@ -1,11 +1,12 @@
-// consumers
-export { some, every, contains, find, reduce } from './array-methods/consumers'
+export * from "./regular";
 
-// HOFs
-export { map, filter } from './array-methods/hofs';
+export * from "./pipeable";
 
-// Misc
-export { entries, flat, flatMap } from './array-methods/misc';
+export type hofFunc<T, U> = (item: T, index?: number) => U;
 
-// Custom Methods
-export { chain, cycle, iterableFromNested, zip } from './custom-methods/index'
+// generic pipe utility command
+export const pipe = (...funcs: Function[]) => (val: any) =>
+  funcs.reduce((accum, curr) => curr(accum), val);
+
+// utility function for use in pipes when normal spread is difficult
+export const collect = (iter: Iterable<any>) => [...iter];

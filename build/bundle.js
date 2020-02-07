@@ -47,21 +47,6 @@ function reduce(iter, initialVal, reduceFunc) {
     return accum;
 }
 
-/// return new iterable with each function applied
-function* map(iter, mapFunc) {
-    for (const item of iter) {
-        yield mapFunc(item);
-    }
-}
-/// return new iterable with valus missing that don't pass the filter function
-function* filter(iter, filterFunc) {
-    for (const item of iter) {
-        if (!filterFunc(item))
-            continue;
-        yield item;
-    }
-}
-
 /// allows non-array iterables to have a comparable `.entries()` method
 /// returns index along with item in a given iterable
 function* entries(iter) {
@@ -69,6 +54,20 @@ function* entries(iter) {
     for (const item of iter) {
         yield [index, item];
         index++;
+    }
+}
+/// return new iterable with each function applied
+function* map(iter, mapFunc) {
+    for (const [index, item] of entries(iter)) {
+        yield mapFunc(item, index);
+    }
+}
+/// return new iterable with valus missing that don't pass the filter function
+function* filter(iter, filterFunc) {
+    for (const [index, item] of entries(iter)) {
+        if (!filterFunc(item, index))
+            continue;
+        yield item;
     }
 }
 /// flattens an iterator of iterators. Only flattens one level.
@@ -82,6 +81,16 @@ function* flat(iter) {
 /// maps and then flattens. A copy of Array.prototype.flatMap, but specifically iterables
 function* flatMap(iter, mapFunc) {
     yield* flat(map(iter, mapFunc));
+}
+/// mimics Array.prototype.slice
+function* slice(iter, begin, end) {
+    for (const [index, item] of entries(iter)) {
+        if (index < begin)
+            continue;
+        if (end && end > end)
+            continue;
+        yield item;
+    }
 }
 
 /// basic utility function to combine 2 Iterables. It exits when one runs out of output,
@@ -126,8 +135,56 @@ function* cycle(iter) {
         }
     }
 }
+/// takes first n elements from an iter
+function* take(iter, until) {
+    for (const [index, item] of entries(iter)) {
+        if (index === until)
+            return;
+        yield item;
+    }
+}
+/// mimics Array.prototype.slice
+function* takeWhile(iter, boolFunc) {
+    for (const [index, item] of entries(iter)) {
+        if (!boolFunc(item, index))
+            return;
+        yield item;
+    }
+}
+
+function pipeSome(func) {
+    return (iter) => some(iter, func);
+}
+function pipeEvery(func) {
+    return (iter) => every(iter, func);
+}
+function pipeContains(itemToFind) {
+    return (iter) => contains(iter, itemToFind);
+}
+function pipeFind(itemToFind) {
+    return (iter) => find(iter, itemToFind);
+}
+function pipeReduce(initialVal, reduceFunc) {
+    return (iter) => reduce(iter, initialVal, reduceFunc);
+}
+
+function pipeMap(mapFunc) {
+    return (iter) => map(iter, mapFunc);
+}
+function pipeFilter(filterFunc) {
+    return (iter) => filter(iter, filterFunc);
+}
+function pipeFlatMap(mapFunc) {
+    return (iter) => flatMap(iter, mapFunc);
+}
+
+// generic pipe utility command
+const pipe = (...funcs) => (val) => funcs.reduce((accum, curr) => curr(accum), val);
+// utility function for use in pipes when normal spread is difficult
+const collect = (iter) => [...iter];
 
 exports.chain = chain;
+exports.collect = collect;
 exports.contains = contains;
 exports.cycle = cycle;
 exports.entries = entries;
@@ -138,6 +195,18 @@ exports.flat = flat;
 exports.flatMap = flatMap;
 exports.iterableFromNested = iterableFromNested;
 exports.map = map;
+exports.pipe = pipe;
+exports.pipeContains = pipeContains;
+exports.pipeEvery = pipeEvery;
+exports.pipeFilter = pipeFilter;
+exports.pipeFind = pipeFind;
+exports.pipeFlatMap = pipeFlatMap;
+exports.pipeMap = pipeMap;
+exports.pipeReduce = pipeReduce;
+exports.pipeSome = pipeSome;
 exports.reduce = reduce;
+exports.slice = slice;
 exports.some = some;
+exports.take = take;
+exports.takeWhile = takeWhile;
 exports.zip = zip;

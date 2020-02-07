@@ -1,4 +1,4 @@
-type boolFunc<T> = (item: T) => boolean;
+export type boolFunc<T> = (item: T) => boolean;
 
 export function some<T>(iter: Iterable<T>, func: boolFunc<T> = (item) => Boolean(item)): boolean {
 	for (const item of iter) {
