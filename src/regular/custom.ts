@@ -44,7 +44,7 @@ export function* iterableFromNested<T>(iterObj: NestedObject<T>, nestProp: strin
 
 
 /// chains iterables, one after the other. The code is identical to flatten.
-export function* chain<T>(...iters: Iterable<any>[]): Iterable<T> {
+export function* chain(...iters: Iterable<any>[]): Iterable<any> {
 	yield* flat(iters);
 }
 
