@@ -1,6 +1,6 @@
-export type boolFunc<T> = (item: T) => boolean;
+import { hofFunc } from '../main'
 
-export function some<T>(iter: Iterable<T>, func: boolFunc<T> = (item) => Boolean(item)): boolean {
+export function some<T>(iter: Iterable<T>, func: hofFunc<T, boolean> = (item) => Boolean(item)): boolean {
 	for (const item of iter) {
 		if (func(item)) return true;
 	}
@@ -8,7 +8,7 @@ export function some<T>(iter: Iterable<T>, func: boolFunc<T> = (item) => Boolean
 	return false;
 }
 
-export function every<T>(iter: Iterable<T>, func: boolFunc<T> = (item) => Boolean(item)): boolean {
+export function every<T>(iter: Iterable<T>, func: hofFunc<T, boolean> = (item) => Boolean(item)): boolean {
 	for (const item of iter) {
 		if (!func(item)) return false;
 	}
@@ -17,10 +17,10 @@ export function every<T>(iter: Iterable<T>, func: boolFunc<T> = (item) => Boolea
 }
 
 /// returns true if item found in iterable
-export function contains<T>(iter: Iterable<T>, itemToFind: T | boolFunc<T>): boolean {
+export function contains<T>(iter: Iterable<T>, itemToFind: T | hofFunc<T, boolean>): boolean {
 	for (const item of iter) {
     const isItem = typeof itemToFind === 'function' 
-      ? (itemToFind as boolFunc<T>)(item) 
+      ? (itemToFind as hofFunc<T, boolean>)(item) 
       : itemToFind === item;
 		
 		if (isItem) return true;
@@ -30,10 +30,10 @@ export function contains<T>(iter: Iterable<T>, itemToFind: T | boolFunc<T>): boo
 }
 
 /// returns item if it is found in iterable and null if it isn't
-export function find<T>(iter: Iterable<T>, itemToFind: T | boolFunc<T>): T {
+export function find<T>(iter: Iterable<T>, itemToFind: T | hofFunc<T, boolean>): T {
 	for (const item of iter) {
     const isItem = typeof itemToFind === 'function' 
-      ? (itemToFind as boolFunc<T>)(item) 
+      ? (itemToFind as hofFunc<T, boolean>)(item) 
       : itemToFind === item;
     
 		if (isItem) return item;
