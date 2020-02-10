@@ -7,7 +7,8 @@ const {
   pipeTakeWhile,
   pipeSlice,
   pipeFlatMap,
-  pipeReduce
+  pipeReduce,
+  pipeTap
 } = require("../build/bundle");
 
 // describe('Testing lazy evaluation', () => {
@@ -103,3 +104,21 @@ describe("Basic Pipes", () => {
     expect(res).toStrictEqual(expected);
   });
 });
+
+describe("Tap Testing", () => {
+  test("map test", () => {
+    const arr = [1, 2, 3];
+
+    const res = pipe(
+      pipeTap(() => console.log('initial: ')),
+      pipeMap(n => n ** 2),
+      pipeTap(() => console.log('after map: ')),
+      pipeFilter(n => n < 30),
+      collect
+    )(arr);
+
+    const expected = arr.map(n => n ** 2).filter(n => n < 30);
+
+    expect(res).toStrictEqual(expected);
+  });
+})

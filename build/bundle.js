@@ -46,6 +46,54 @@ function reduce(iter, initialVal, reduceFunc) {
     }
     return accum;
 }
+/// gets the nth element of an array. Has O(n) algorithmic complexity 
+function nth(iter, index) {
+    if (index < 0)
+        throw new Error('index for nth cannot be negative');
+    for (const [i, item] of entries(iter)) {
+        if (index == i)
+            return item;
+    }
+    return null;
+}
+/// splits iterable into 2 arrays by reversing a zip
+function unzip(iter) {
+    const arr1 = [];
+    const arr2 = [];
+    for (const [item1, item2] of iter) {
+        arr1.push(item1);
+        arr2.push(item2);
+    }
+    return [arr1, arr2];
+}
+/// splits iterable into chunks of size chunkSize
+function* chunk(iter, chunkSize) {
+    const arr = [];
+    for (const item of iter) {
+        if (arr.length === chunkSize) {
+            yield arr;
+            arr.length = 0;
+        }
+        arr.push(item);
+    }
+    // yield the last remaining elements
+    if (arr.length)
+        yield arr;
+}
+/// splits iterable into 2 chunks based on result of the boolean function
+function partition(iter, partFunc) {
+    const arr1 = [];
+    const arr2 = [];
+    for (const item of iter) {
+        if (partFunc(item)) {
+            arr1.push(item);
+        }
+        else {
+            arr2.push(item);
+        }
+    }
+    return [arr1, arr2];
+}
 
 /// allows non-array iterables to have a comparable `.entries()` method
 /// returns index along with item in a given iterable
@@ -91,6 +139,13 @@ function* slice(iter, begin, end) {
             continue;
         yield item;
     }
+}
+function* tap(iter, tapFunc) {
+    yield* map(iter, item => {
+        tapFunc();
+        console.log(item);
+        return item;
+    });
 }
 
 /// basic utility function to combine 2 Iterables. It exits when one runs out of output,
@@ -180,6 +235,9 @@ function pipeFlatMap(mapFunc) {
 function pipeSlice(begin, end) {
     return (iter) => slice(iter, begin, end);
 }
+function pipeTap(tapFunc) {
+    return (iter) => tap(iter, tapFunc);
+}
 
 function pipeTake(until) {
     return (iter) => take(iter, until);
@@ -194,6 +252,7 @@ const pipe = (...funcs) => (val) => funcs.reduce((accum, curr) => curr(accum), v
 const collect = (iter) => [...iter];
 
 exports.chain = chain;
+exports.chunk = chunk;
 exports.collect = collect;
 exports.contains = contains;
 exports.cycle = cycle;
@@ -205,6 +264,8 @@ exports.flat = flat;
 exports.flatMap = flatMap;
 exports.iterableFromNested = iterableFromNested;
 exports.map = map;
+exports.nth = nth;
+exports.partition = partition;
 exports.pipe = pipe;
 exports.pipeContains = pipeContains;
 exports.pipeEvery = pipeEvery;
@@ -217,9 +278,12 @@ exports.pipeSlice = pipeSlice;
 exports.pipeSome = pipeSome;
 exports.pipeTake = pipeTake;
 exports.pipeTakeWhile = pipeTakeWhile;
+exports.pipeTap = pipeTap;
 exports.reduce = reduce;
 exports.slice = slice;
 exports.some = some;
 exports.take = take;
 exports.takeWhile = takeWhile;
+exports.tap = tap;
+exports.unzip = unzip;
 exports.zip = zip;

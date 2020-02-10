@@ -58,3 +58,11 @@ export function* slice<T>(
     yield item;
   }
 }
+
+export function* tap<T>(iter: Iterable<T>, tapFunc: hofFunc<void, void>) {
+  yield* map(iter, item => {
+    tapFunc
+    console.log(item);
+    return item;
+  });
+}
