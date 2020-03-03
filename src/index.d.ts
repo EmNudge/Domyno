@@ -1,0 +1,1 @@
+export type hofFunc<T, U> = (item: T, index?: number) => U;
