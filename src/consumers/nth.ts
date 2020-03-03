@@ -2,7 +2,7 @@ import { enumerate } from '../lazy';
 
 /// gets the nth element of an array. Has O(n) algorithmic complexity
 function nth<T>(index: number) {
-	return (iter: Iterable<T>): T => {
+	return (iter: Iterable<T>): T | null => {
 		if (index < 0) throw new Error('index for nth cannot be negative');
 
 		for (const [i, item] of enumerate(iter)) {
