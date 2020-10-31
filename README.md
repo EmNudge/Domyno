@@ -24,12 +24,13 @@ console.log(newArr); // [1, 4, 9]
 
 Piped version
 ```js
-import { pipeMap, pipeFilter, collect, pipe } from 'domyno';
+import { collect, pipe } from 'domyno';
+import { map, filter } from 'domyno/pipeable';
 
 const arr = [1, 2, 3, 4, 5];
 const newArr = pipe(
-  pipeMap(n => n ** 2),    // curried version of map
-  pipeFilter(n => n < 15), // curried version of filter
+  map(n => n ** 2),    // curried version of map
+  filter(n => n < 15), // curried version of filter
   collect                  // collects into an array
 );
 

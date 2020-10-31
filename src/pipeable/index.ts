@@ -1,3 +1,2 @@
-export * from "./consumers";
-export * from "./lazy";
-export * from "./custom";
+export * from './consumers';
+export * from './lazy';

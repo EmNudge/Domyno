@@ -1,0 +1,9 @@
+export { default as contains } from './contains';
+export { default as every } from './every';
+export { default as some } from './some';
+export { default as find } from './find';
+export { default as nth } from './nth';
+export { default as partition } from './partition';
+export { default as reduce } from './reduce';
+export { default as tail } from './tail';
+export { default as unzip } from './unzip';

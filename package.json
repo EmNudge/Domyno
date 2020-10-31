@@ -1,22 +1,36 @@
 {
-  "name": "lazy-iter",
-  "version": "1.0.0",
-  "description": "Basic lazy iterator class.",
-  "main": "index.js",
+  "name": "@emnudge/domyno",
+  "version": "0.0.1",
+  "description": "Iterator utility functions",
+  "main": "build/npm/index.js",
   "scripts": {
-    "test": "rollup -c && jest",
-    "debug-test": "rollup -c && node --inspect-brk node_modules/.bin/jest --runInBand",
+    "test": "jest",
     "build": "rollup -c"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "EmNudge",
+  "homepage": "https://github.com/EmNudge/Domyno",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EmNudge/Domyno"
+  },
+  "license": "MIT",
+  "keywords": [
+    "iterable",
+    "map",
+    "filter",
+    "reduce",
+    "domino"
+  ],
+  "files": [
+    "build/npm"
+  ],
   "devDependencies": {
     "@rollup/plugin-typescript": "^3.0.0",
-    "jest": "^24.9.0",
+    "@types/jest": "^26.0.15",
+    "jest": "^26.6.1",
     "rollup": "^1.29.0",
-    "rollup-plugin-terser": "^5.2.0",
-    "tslib": "^1.10.0",
+    "ts-jest": "^26.4.3",
+    "tslib": "^2.0.3",
     "typescript": "^3.7.5"
   }
 }
