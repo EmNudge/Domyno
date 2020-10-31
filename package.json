@@ -2,7 +2,7 @@
   "name": "@emnudge/domyno",
   "version": "0.0.1",
   "description": "Iterator utility functions",
-  "main": "build/npm/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest",
     "build": "rollup -c"
@@ -22,7 +22,8 @@
     "domino"
   ],
   "files": [
-    "build/npm"
+    "index.js",
+    "pipeable"
   ],
   "devDependencies": {
     "@rollup/plugin-typescript": "^3.0.0",

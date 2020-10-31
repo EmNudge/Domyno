@@ -10,10 +10,10 @@ const npmOutput = (input, output) => ({
 export default [
     npmOutput(
         'src/index.ts', 
-        'build/npm/index.js'
+        'npm-build/index.js'
     ),
     npmOutput(
         'src/pipeable/index.ts', 
-        'build/npm/pipeable/index.js'
+        'npm-build/pipeable/index.js'
     ),
 ]
