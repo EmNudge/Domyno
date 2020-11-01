@@ -20,6 +20,8 @@ async function main() {
 
 main();
 
+exports.generateDocs = main;
+
 function getTypeScriptHTML(tsCode, className) {
     const tokenized = highlight('ts', tsCode.replace(/\t/g, ' '.repeat(4))).value;
     return `

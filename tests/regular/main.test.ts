@@ -1,5 +1,6 @@
 import { zip, chain } from '../../src/utils';
-import { map, enumerate, flat, filter, reduce } from '../../src/regular';
+import { map, enumerate, flat, filter } from '../../src/regular/lazy';
+import { reduce } from '../../src/regular/consumers';
 
 describe('Combining Iterables', () => {
 	test('array double', () => {

@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "docs": "node scripts/docs.js",
+    "publish": "node scripts/publish.js && cd npm-build && npm publish"
   },
   "author": "EmNudge",
   "homepage": "https://github.com/EmNudge/Domyno",
