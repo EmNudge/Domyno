@@ -1,5 +1,15 @@
+:root {
+  --highlight: #6363bb;
+  --color: black;
+  --bg: white;
+}
+
 body {
   font-family: sans-serif;
+
+  background: var(--bg);
+  color: var(--color);
+  transition: 0.25s;
 }
 
 header, .main-container {
@@ -58,9 +68,13 @@ h1, h2 {
 }
 
 .fn-definition {
-  border-left: 4px solid #6363bb;
+  border-left: 4px solid var(--highlight);
   padding: 10px;
   margin: 20px;
+}
+
+.fn-definition h2 a {
+  color: inherit;
 }
 
 code > pre {
@@ -87,7 +101,7 @@ code > pre {
 
 @media (prefers-color-scheme: dark) {
   body {
-    background: #202026;
-    color: white;
+    --bg: #202026;
+    --color: white;
   }
 }

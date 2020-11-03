@@ -1,5 +1,4 @@
-const {existsSync} = require('fs');
-const {writeFile, readdir, readFile, stat, mkdir} = require('fs').promises;
+const {writeFile, readdir, readFile, stat} = require('fs').promises;
 const {join} = require('path');
 const {highlight} = require('highlight.js');
 
@@ -40,8 +39,8 @@ function getNavSectionHTML(functionsMap, nameStack = []) {
 
         htmlEls.push('<a ' +
             `href="#${nameStack.join('-')}"` +
-            ` style="padding-left: ${(nameStack.length - 1) * 10}px"` +
-            `>${name}</a>`);
+            ` style="padding-left: ${(nameStack.length - 1) * 20}px"` +
+            `>${obj.name || name}</a>`);
 
         if (obj instanceof Map) {
             htmlEls.push(getNavSectionHTML(obj, [...nameStack]));
@@ -66,11 +65,12 @@ function getMainSectionHTML(functionsMap, nameStack = []) {
             const {name, description, header, source, isPipeable} = obj;
             nameStack.push(name);
 
+            const id = nameStack.join('-');
             htmlEls.push(
-                `<div class="fn-definition" id="${nameStack.join('-')}">\n` +
-                `<h2>${name}</h2>\n` +
+                `<div class="fn-definition" id="${id}">\n` +
+                `<h2><a href="#${id}">${name}</a></h2>\n` +
                 `${getTypeScriptHTML(header, 'fn-header')}\n` +
-                `<p>${description}</p>\n` +
+                `<p>${description.replace(/\n/g, '<br>')}</p>\n` +
                 `${getTypeScriptHTML(source, 'fn-source')}\n` +
                 '</div>'
             );
@@ -112,7 +112,7 @@ async function getFiles(fileMap, currPath) {
 
 function parseTSFile(source, filePath) {
     const commentRes = source.matchAll(/\/\/\/ *(.+)/g);
-    const description = [...commentRes].map(c => c[1]).join('');
+    const description = [...commentRes].map(c => c[1]).join('\n');
 
     const headerRes = source.match(/(?:\n|^)(function(?:.|\n)+?){/);
 

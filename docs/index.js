@@ -32,3 +32,30 @@ for (const defEl of defEls) {
     defEl.insertBefore(button, sourceEl);
     defEl.insertBefore(document.createElement('br'), sourceEl);
 }
+
+
+// toggle for Dark/Light mode
+const label = document.createElement('label');
+label.textContent = 'Toggle Dark/Light Mode';
+label.style = `
+    position: absolute; 
+    top: 10px; 
+    right: 10px;
+    user-select: none;
+`;
+
+const checkbox = document.createElement('input');
+checkbox.type = 'checkbox';
+
+const pageStyles = window.getComputedStyle(document.body);
+let isLight = pageStyles.getPropertyValue('--bg').includes('white');
+checkbox.addEventListener('click', () => {
+    const setVal = (...args) => document.body.style.setProperty(...args);
+    setVal('--bg', isLight ? '#202026' : 'white');
+    setVal('--color', isLight ? 'white' : 'black');
+    isLight = !isLight;
+})
+label.appendChild(checkbox);
+
+document.body.appendChild(label);
+
