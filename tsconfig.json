@@ -6,7 +6,8 @@
       "es6",
       "dom"
     ],
-    "rootDir": "/",
+    "typeRoots": [],
+    "rootDir": "./",
     "types": [
       "jest"
     ],
@@ -16,6 +17,8 @@
     "moduleResolution": "node",
     "declaration": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  }
+    "declarationDir": "./types",
+    "forceConsistentCasingInFileNames": true,
+  },
+  "exclude": ["tests/"]
 }

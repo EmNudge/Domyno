@@ -1,7 +1,7 @@
-import type { hofFunc } from '../..';
+
 
 /// splits iterable into 2 chunks based on result of the boolean function
-function partition<T>(iter: Iterable<T>, partFunc: hofFunc<T, boolean>) {
+function partition<T>(iter: Iterable<T>, partFunc: HigherOrderFn<T, boolean>) {
 	const arr1 = [];
 	const arr2 = [];
 
