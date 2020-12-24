@@ -1,5 +1,5 @@
 /// splits iterable into 2 arrays by reversing a zip
-function unzip<T>(iter: Iterable<Iterable<T>>) {
+export function unzip<T>(iter: Iterable<Iterable<T>>): [T[], T[]] {
 	const arr1 = [];
 	const arr2 = [];
 

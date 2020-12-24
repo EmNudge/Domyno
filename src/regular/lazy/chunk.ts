@@ -1,5 +1,5 @@
 /// splits iterable into chunks of size chunkSize
-function* chunk<T>(iter: Iterable<T>, chunkSize: number) {
+export function* chunk<T>(iter: Iterable<T>, chunkSize: number):IterableIterator<T[]> {
 	const arr = [];
 
 	for (const item of iter) {
@@ -14,5 +14,5 @@ function* chunk<T>(iter: Iterable<T>, chunkSize: number) {
 	// yield the last remaining elements
 	if (arr.length)	yield arr;
 }
-  
+
 export default chunk;
