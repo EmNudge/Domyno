@@ -1,12 +1,8 @@
-import { enumerate } from './index';
+import { map as _map } from '../../regular';
 
 /// return new iterable with each function applied
-function map<T, U>(mapFunc: (item: T, index: number) => U) {
-	return function*(iter: Iterable<T>): Iterable<U> {
-		for (const [index, item] of enumerate(iter)) {
-			yield mapFunc(item, index);
-		}
-	};
+export function map<T, U>(mapFunc: HigherOrderFn<T,U>) {
+	return (iter:Iterable<T>) => _map(iter, mapFunc)
 }
 
 export default map;

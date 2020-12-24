@@ -1,13 +1,7 @@
+import { some as _some } from "../../regular";
 
-
-function some<T>(func: HigherOrderFn<T, boolean> = (item) => Boolean(item)) {
-    return (iter: Iterable<T>): boolean => {
-        for (const item of iter) {
-            if (func(item)) return true;
-        }
-
-        return false;
-    }
+export function some<T>(func: HigherOrderFn<T, boolean> = (item) => Boolean(item)) {
+    return (iter: Iterable<T>) => _some(iter,func)
 }
 
 export default some;

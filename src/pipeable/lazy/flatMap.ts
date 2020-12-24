@@ -1,11 +1,8 @@
-import { flat, map } from './index';
-
+import { flatMap as _flatMap } from "../../regular";
 
 /// maps and then flattens. A copy of Array.prototype.flatMap, but specifically iterables
-function flatMap<T, U>(mapFunc: HigherOrderFn<T, Iterable<U>>) {
-	return function*(iter: Iterable<T>) {
-		yield* flat(map(mapFunc)(iter));
-	};
+export function flatMap<T, U>(mapFunc: HigherOrderFn<T, Iterable<U>>) {
+	return (iter: Iterable<T>) => _flatMap(iter, mapFunc);
 }
 
 export default flatMap;

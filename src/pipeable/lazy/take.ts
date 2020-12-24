@@ -1,14 +1,8 @@
-import { enumerate } from './index';
+import { take as _take } from "../../regular";
 
 /// takes first n elements from an iter
-function take<T>(until: number) {
-	return function*(iter: Iterable<T>): Iterable<T> {
-		for (const [index, item] of enumerate(iter)) {
-			if (index === until) return;
-
-			yield item;
-		}
-	};
+export function take<T>(until: number) {
+	return (iter:Iterable<T>) => _take(iter,until)
 }
 
 export default take;

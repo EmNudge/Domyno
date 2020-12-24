@@ -1,14 +1,9 @@
-import { enumerate } from './index';
+import { filter as _filter } from "../../regular";
 
 
 /// return new iterable with valus missing that don't pass the filter function
-function filter<T>(filterFunc: HigherOrderFn<T, boolean>) {
-	return function*(iter: Iterable<T>): Iterable<T> {
-		for (const [index, item] of enumerate(iter)) {
-			if (!filterFunc(item, index)) continue;
-			yield item;
-		}
-	};
+export function filter<T>(filterFunc: HigherOrderFn<T, boolean>) {
+	return (iter:Iterable<T>) => _filter(iter, filterFunc)
 }
 
 export default filter;
