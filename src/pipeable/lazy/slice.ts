@@ -1,15 +1,8 @@
-import { enumerate } from './index';
+import { slice as _slice } from '../../regular';
 
 /// mimics Array.prototype.slice
-function slice<T>(begin: number, end?: number) {
-	return function*(iter: Iterable<T>): Iterable<T> {
-		for (const [index, item] of enumerate(iter)) {
-			if (index < begin) continue;
-			if (end && end > end) continue;
-
-			yield item;
-		}
-	};
+export function slice<T>(begin: number, end?: number) {
+	return (iter:Iterable<T>) => _slice(iter, begin, end)
 }
 
 export default slice;

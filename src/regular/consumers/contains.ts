@@ -1,12 +1,13 @@
-import type { hofFunc } from '../..';
+import { enumerate } from "../lazy";
+
 
 /// returns true if item found in iterable
-function contains<T>(iter: Iterable<T>, itemToFind: T | hofFunc<T, boolean>): boolean {
-	for (const item of iter) {
-		const isItem = typeof itemToFind === 'function' 
-			? (itemToFind as hofFunc<T, boolean>)(item) 
+export function contains<T>(iter: Iterable<T>, itemToFind: T | HigherOrderFn<T, boolean>): boolean {
+	for (const [index, item] of enumerate(iter)) {
+		const isItem = typeof itemToFind === 'function'
+			? (itemToFind as HigherOrderFn<T, boolean>)(item, index, iter)
 			: itemToFind === item;
-		
+
 		if (isItem) return true;
 	}
 

@@ -1,13 +1,7 @@
-import type { hofFunc } from '../..';
+import { every as _every } from "../../regular";
 
-function every<T>(func: hofFunc<T, boolean> = (item) => Boolean(item)) {
-    return (iter: Iterable<T>): boolean => {
-        for (const item of iter) {
-            if (!func(item)) return false;
-        }
-    
-        return true;
-    }
+export function every<T>(func: HigherOrderFn<T, boolean> = (item) => Boolean(item)) {
+    return (iter: Iterable<T>) => _every(iter,func)
 }
 
 export default every;

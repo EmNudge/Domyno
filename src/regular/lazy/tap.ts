@@ -1,12 +1,12 @@
 import { map } from './index';
-import type { hofFunc } from '../..';
+
 
 /// a debugging function which doesn't affect the function
-function* tap<T>(iter: Iterable<T>, tapFunc: hofFunc<T, void>) {
-	yield* map(iter, (item: T) => {
-	  tapFunc(item);
+export function* tap<T>(iter: Iterable<T>, tapFunc: HigherOrderFn<T, void>):IterableIterator<T> {
+	yield* map(iter, (item, ...args) => {
+	  tapFunc(item, ...args);
 	  return item;
 	});
 }
 
-export default tap;
+export default tap

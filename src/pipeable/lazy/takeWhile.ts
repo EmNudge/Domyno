@@ -1,15 +1,8 @@
-import { enumerate } from './index';
-import type { hofFunc } from '../..';
+import { takeWhile as _takeWhile } from "../../regular";
 
 /// Like filtering, but stopping execution when reaching a false value
-function takeWhile<T>(boolFunc: hofFunc<T, boolean>) {
-	return function*(iter: Iterable<T>): Iterable<T> {
-		for (const [index, item] of enumerate(iter)) {
-			if (!boolFunc(item, index)) return;
-
-			yield item;
-		}
-	};
+export function takeWhile<T>(boolFunc: HigherOrderFn<T, boolean>) {
+	return (iter:Iterable<T>) => _takeWhile(iter, boolFunc)
 }
 
 export default takeWhile;

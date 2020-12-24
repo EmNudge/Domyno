@@ -2,6 +2,7 @@
 const {exec} = require('child_process');
 const {promisify} = require('util')
 const {copyFile} = require('fs').promises;
+const { copy, remove } = require('fs-extra')
 const {generateDocs} = require('./docs.js');
 
 const executeCmd = promisify(exec);
@@ -20,7 +21,9 @@ async function main() {
         }
     }
 
+    await remove('types')
     await executeCmd('rollup -c');
+    await copy('types', 'npm-build/types')
     await copyFile('package.json', 'npm-build/package.json');
     await copyFile('README.md', 'npm-build/README.md');
 
