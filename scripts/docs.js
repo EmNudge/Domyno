@@ -89,16 +89,15 @@ async function getFiles(fileMap, currPath) {
         const filePath = join(currPath, fileName)
 
         const info = await stat(filePath);
-        const isFile = info.isFile();
 
-        // skip index.ts files
-        if (isFile && /^index/.test(fileName)) continue;
-
-        if (isFile) {
+        if (info.isFile()) {
+            // skip index.ts and type files
+            if (/^index/.test(fileName) || /.d.ts$/.test(fileName)) continue;
+            
             const fileContents = await readFile(filePath, "utf8");
             // extract info from file
             const file = parseTSFile(fileContents, filePath);
-
+    
             fileMap.set(fileName, file);
             continue;
         }
@@ -114,7 +113,7 @@ function parseTSFile(source, filePath) {
     const commentRes = source.matchAll(/\/\/\/ *(.+)/g);
     const description = [...commentRes].map(c => c[1]).join('\n');
 
-    const headerRes = source.match(/(?:\n|^)(function(?:.|\n)+?){/);
+    const headerRes = source.match(/(?:\n|^)(?:export +?)?(function(?:.|\n)+?){/);
 
     if (!headerRes || !headerRes[1]) {
         throw new Error(
